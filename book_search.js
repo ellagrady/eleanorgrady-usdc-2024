@@ -1,4 +1,8 @@
 /** 
+ * Eleanor Grady
+ * USDC 2024 Project Assessment
+ * 
+ * 
  * RECOMMENDATION
  * 
  * To test your code, you should open "tester.html" in a web browser.
@@ -20,49 +24,48 @@
  * */ 
  function findSearchTermInBooks(searchTerm, scannedTextObj) {
 
+    // array for matching lines to be added to
     matchingLines = []
     
     // Loop through each book in input object
     for (let i = 0; i < scannedTextObj.length; i++) {
-        // Validate book structure
         book = scannedTextObj[i]
+
+        // Validate book structure
         if (!book || typeof book !== 'object' || !Array.isArray(book.Content)) {
             throw new Error('Invalid book data format');
           }
         // Loop through each content entry in each book
         for (let i = 0; i < book.Content.length; i++) {
+
             entry = book.Content[i]
+
             // Validate content entry structure
-            if (
-                !entry ||
-                typeof entry !== 'object' ||
-                typeof entry.Page !== 'number' ||
-                typeof entry.Line !== 'number' ||
-                typeof entry.Text !== 'string'
-              ) {
+            if (!entry || typeof entry !== 'object' || typeof entry.Page !== 'number' || typeof entry.Line !== 'number' || typeof entry.Text !== 'string') {
                 throw new Error('Invalid content entry format');
               }
+
             // Check if the search term is present in the text
             if (entry.Text.includes(searchTerm)) {
-                // If found, add the matching line to the result
-                matchingLines.push({
-                    ISBN: book.ISBN,
-                    Page: entry.Page,
-                    Line: entry.Line,
+                // If found, add  matching line to the matchingLines
+                matchingLines.push({ ISBN: book.ISBN, Page: entry.Page, Line: entry.Line,
                 });
             }
         }
     }
 
+    // set JSON output with searchTerm and matchingLines
     var result = {
         "SearchTerm": searchTerm,
         "Results": matchingLines
     };
     
+    // if searchTerm is empty string
     if (searchTerm == "") {
         result = "Empty search term."
     }
 
+    // if input scannedTextObj is empty array
     if (scannedTextObj.length == 0) {
         result = "Empty input search object."
     }
